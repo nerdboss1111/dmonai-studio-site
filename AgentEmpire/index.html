@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <title>The Teams: D'MONAI Studios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0a0a;
+        --card-top: #151517;
+        --card-bot: #0e0e10;
+        --line: rgba(255, 255, 255, 0.08);
+        --line-soft: rgba(255, 255, 255, 0.05);
+        --text: #ece9e1;
+        --muted: #a9a59b;
+        --faint: #716e66;
+        --gold: #d4af37;
+        --gold-deep: #c9a227;
+        --gold-bright: #f0d878;
+        --gold-soft: rgba(212, 175, 55, 0.13);
+        --teal: #2dd4bf;
+        --teal-bright: #5eead4;
+        --teal-soft: rgba(45, 212, 191, 0.11);
+        --blue: #5ea0f7;
+        --blue-deep: #3b82d6;
+        --blue-bright: #a8c8fb;
+        --blue-soft: rgba(94, 160, 247, 0.11);
+        --violet: #b18cff;
+        --violet-deep: #8b5cf6;
+        --violet-bright: #d3bcff;
+        --violet-soft: rgba(177, 140, 255, 0.11);
+        --serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+        --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-weight: 300;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      /* Ambient backdrop: layered glows + fine grain */
+      .backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background:
+          radial-gradient(900px 480px at 15% -5%, rgba(212, 175, 55, 0.07), transparent 60%),
+          radial-gradient(900px 520px at 88% 4%, rgba(45, 212, 191, 0.05), transparent 60%),
+          radial-gradient(1200px 700px at 50% 110%, rgba(212, 175, 55, 0.04), transparent 65%),
+          linear-gradient(180deg, #0c0c0d 0%, #0a0a0a 40%, #090909 100%);
+      }
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.5;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      }
+      .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+      /* ---------- Hero ---------- */
+      .hero { text-align: center; padding: 88px 24px 30px; }
+      .brand-line {
+        display: inline-flex; align-items: center; gap: 16px;
+        font-size: 0.72rem; letter-spacing: 0.42em; text-transform: uppercase;
+        color: var(--gold); font-weight: 500; margin: 0 0 26px;
+      }
+      .brand-line::before, .brand-line::after {
+        content: ""; display: block; width: 44px; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7));
+      }
+      .brand-line::after { background: linear-gradient(90deg, rgba(212, 175, 55, 0.7), transparent); }
+      .hero h1 {
+        font-family: var(--serif); font-weight: 700;
+        font-size: clamp(3.2rem, 10vw, 6.8rem);
+        letter-spacing: 0.04em; line-height: 1.02; margin: 0;
+        text-transform: uppercase; color: #f5f2ea;
+      }
+      .hero h1 .thin { font-weight: 500; font-style: italic; text-transform: none; letter-spacing: 0; color: var(--gold-bright); }
+      .hero-rule {
+        width: 72px; height: 1px; margin: 30px auto 26px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        position: relative;
+      }
+      .hero-rule::after {
+        content: ""; position: absolute; left: 50%; top: 50%;
+        width: 7px; height: 7px; transform: translate(-50%, -50%) rotate(45deg);
+        background: var(--gold);
+      }
+      .hero-sub {
+        max-width: 660px; margin: 0 auto; color: var(--muted);
+        font-size: 1.06rem; line-height: 1.75; font-weight: 300;
+      }
+      .hero-sub strong { color: var(--text); font-weight: 500; }
+      .hero-stats {
+        display: flex; justify-content: center; gap: clamp(28px, 6vw, 64px);
+        margin: 44px auto 6px; flex-wrap: wrap;
+      }
+      .stat { text-align: center; }
+      .stat .num { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: #f5f2ea; line-height: 1; }
+      .stat .lbl { font-size: 0.66rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faint); margin-top: 8px; }
+      .updated {
+        margin-top: 30px; font-size: 0.78rem; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--faint);
+      }
+      .updated b { color: var(--muted); font-weight: 500; }
+
+      /* ---------- Search ---------- */
+      .search-wrap { display: flex; justify-content: center; padding: 34px 24px 0; }
+      .search-box { position: relative; width: 100%; max-width: 560px; }
+      .search-box svg {
+        position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
+        width: 17px; height: 17px; color: var(--faint); pointer-events: none;
+        transition: color 0.25s ease;
+      }
+      .search-box input {
+        width: 100%; font-family: var(--sans); font-size: 0.95rem; font-weight: 300;
+        color: var(--text); background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--line); border-radius: 999px;
+        padding: 13px 22px 13px 48px; outline: none;
+        transition: border-color 0.25s ease, background 0.25s ease;
+        -webkit-appearance: none; appearance: none;
+      }
+      .search-box input::placeholder { color: var(--faint); }
+      .search-box input:focus { border-color: rgba(212, 175, 55, 0.55); background: rgba(255, 255, 255, 0.05); }
+      .search-box input:focus + svg, .search-box:focus-within svg { color: var(--gold); }
+      .search-box input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+
+      /* ---------- Filters ---------- */
+      .filters {
+        display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;
+        padding: 26px 24px 6px;
+      }
+      .filter-btn {
+        font-family: var(--sans); font-size: 0.8rem; font-weight: 500;
+        letter-spacing: 0.12em; text-transform: uppercase;
+        color: var(--muted); background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--line); border-radius: 999px;
+        padding: 10px 22px; cursor: pointer;
+        transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+      }
+      .filter-btn:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.25); transform: translateY(-1px); }
+      .filter-btn .count { opacity: 0.55; font-weight: 400; margin-left: 6px; letter-spacing: 0; }
+      .filter-btn.active[data-filter="all"],
+      .filter-btn.active[data-filter="Money Game"] {
+        color: #141005; background: linear-gradient(135deg, var(--gold-bright), var(--gold) 55%, var(--gold-deep));
+        border-color: transparent;
+      }
+      .filter-btn.active[data-filter="Specialist"],
+      .filter-btn.active[data-filter="Operations"],
+      .filter-btn.active[data-filter="Judges"],
+      .filter-btn.active[data-filter="SEO"] {
+        color: #04201b; background: linear-gradient(135deg, var(--teal-bright), var(--teal) 60%, #14b8a6);
+        border-color: transparent;
+      }
+      .filter-btn.active[data-filter="Product & Engineering"],
+      .filter-btn.active[data-filter="Data & Intelligence"],
+      .filter-btn.active[data-filter="Marketing & Sales"],
+      .filter-btn.active[data-filter="Legal & Security"],
+      .filter-btn.active[data-filter="Publishing"],
+      .filter-btn.active[data-filter="Financials"],
+      .filter-btn.active[data-filter="Media"],
+      .filter-btn.active[data-filter="Games"],
+      .filter-btn.active[data-filter="Education"],
+      .filter-btn.active[data-filter="Commerce"],
+      .filter-btn.active[data-filter="Civilization"] {
+        color: #0a1626; background: linear-gradient(135deg, var(--blue-bright), var(--blue) 60%, var(--blue-deep));
+        border-color: transparent;
+      }
+      .filter-btn.active[data-filter="Council"] {
+        color: #170b2e; background: linear-gradient(135deg, var(--violet-bright), var(--violet) 60%, var(--violet-deep));
+        border-color: transparent;
+      }
+      .filter-btn.active .count { opacity: 0.75; }
+      .showing {
+        text-align: center; color: var(--faint); font-size: 0.8rem;
+        letter-spacing: 0.1em; margin: 16px 0 4px; min-height: 1.2em;
+      }
+
+      /* ---------- Grid & cards ---------- */
+      .grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px;
+        padding: 26px 0 30px;
+      }
+      @media (max-width: 1080px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 660px) { .grid { grid-template-columns: 1fr; } }
+
+      .card {
+        --acc: var(--gold); --acc-soft: var(--gold-soft); --acc-bright: var(--gold-bright);
+        background: linear-gradient(180deg, var(--card-top), var(--card-bot));
+        border: 1px solid var(--line-soft); border-radius: 18px;
+        padding: 30px 28px 26px; display: flex; flex-direction: column;
+        position: relative; overflow: hidden;
+        opacity: 0; transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+      }
+      .card.accent-teal { --acc: var(--teal); --acc-soft: var(--teal-soft); --acc-bright: var(--teal-bright); }
+      .card.accent-blue { --acc: var(--blue); --acc-soft: var(--blue-soft); --acc-bright: var(--blue-bright); }
+      .card.accent-purple { --acc: var(--violet); --acc-soft: var(--violet-soft); --acc-bright: var(--violet-bright); }
+      .card::before {
+        content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        background: linear-gradient(90deg, transparent, var(--acc), transparent);
+        opacity: 0.55;
+      }
+      .card.revealed { opacity: 1; transform: translateY(0); }
+      .card.revealed:hover {
+        transform: translateY(-6px);
+        border-color: color-mix(in srgb, var(--acc) 38%, transparent);
+        box-shadow: 0 22px 48px -18px rgba(0, 0, 0, 0.85), 0 0 0 1px color-mix(in srgb, var(--acc) 12%, transparent), 0 14px 44px -14px var(--acc-soft);
+      }
+      .card.hidden-card { display: none; }
+
+      .card-head { display: flex; align-items: flex-start; gap: 18px; }
+      .avatar {
+        flex: 0 0 auto; width: 74px; height: 74px; border-radius: 50%; padding: 3px;
+        background: conic-gradient(from 210deg, var(--acc-bright), var(--acc) 30%, rgba(0,0,0,0.35) 55%, var(--acc) 78%, var(--acc-bright));
+        box-shadow: 0 6px 18px -6px var(--acc-soft);
+      }
+      .card.accent-gold .avatar { background: conic-gradient(from 210deg, #f5d76e, #d4af37 30%, #7a5f16 55%, #d4af37 78%, #f5d76e); }
+      .avatar span {
+        display: flex; align-items: center; justify-content: center;
+        width: 100%; height: 100%; border-radius: 50%;
+        background: radial-gradient(circle at 32% 28%, #1e1e22, #121214 70%);
+        font-family: var(--serif); font-weight: 700; font-size: 1.28rem;
+        letter-spacing: 0.06em; color: var(--acc-bright);
+      }
+      .card-titles { min-width: 0; padding-top: 4px; }
+      .card h2 {
+        font-family: var(--serif); font-weight: 700; color: #f5f2ea;
+        font-size: 1.42rem; line-height: 1.15; margin: 0 0 6px;
+        overflow-wrap: anywhere; letter-spacing: 0.01em;
+      }
+      .role {
+        font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase;
+        color: var(--acc); font-weight: 500; margin: 0;
+      }
+      .category {
+        display: inline-block; margin-top: 9px;
+        font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+        color: var(--muted); border: 1px solid var(--line);
+        padding: 3px 9px; border-radius: 999px;
+      }
+      .tagline {
+        font-family: var(--serif); font-style: italic; font-weight: 500;
+        font-size: 1.13rem; line-height: 1.45; color: var(--acc-bright);
+        margin: 20px 0 12px;
+      }
+      .personality { color: var(--muted); font-size: 0.92rem; margin: 0 0 16px; }
+      .traits { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 20px; padding: 0; list-style: none; }
+      .traits li {
+        font-size: 0.7rem; letter-spacing: 0.08em; color: var(--text);
+        border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .section-label {
+        font-size: 0.64rem; letter-spacing: 0.3em; text-transform: uppercase;
+        color: var(--faint); font-weight: 600; margin: 0 0 8px;
+        display: flex; align-items: center; gap: 10px;
+      }
+      .section-label::after { content: ""; flex: 1; height: 1px; background: var(--line-soft); }
+      .work { border-top: 1px solid var(--line-soft); padding-top: 18px; margin-top: auto; }
+      .work p { margin: 0 0 18px; font-size: 0.9rem; color: var(--muted); }
+      .status {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 0.74rem; font-weight: 500; letter-spacing: 0.04em;
+        color: var(--acc-bright); background: var(--acc-soft);
+        border: 1px solid color-mix(in srgb, var(--acc) 30%, transparent);
+        border-radius: 999px; padding: 6px 13px; margin-bottom: 20px;
+      }
+      .status .dot {
+        width: 7px; height: 7px; border-radius: 50%; background: var(--acc);
+        box-shadow: 0 0 0 0 var(--acc-soft); animation: pulse 2.4s infinite;
+      }
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--acc) 45%, transparent); }
+        70% { box-shadow: 0 0 0 7px transparent; }
+        100% { box-shadow: 0 0 0 0 transparent; }
+      }
+      .vision { margin: 0 0 20px; }
+      .vision blockquote {
+        margin: 0; padding: 2px 0 2px 16px;
+        border-left: 2px solid var(--acc);
+        font-family: var(--serif); font-style: italic; font-size: 0.99rem;
+        line-height: 1.6; color: #d9d5c9;
+      }
+      .quirks { list-style: none; margin: 0; padding: 0; }
+      .quirks li {
+        position: relative; padding-left: 18px; margin-bottom: 7px;
+        font-size: 0.84rem; color: var(--faint); line-height: 1.55;
+      }
+      .quirks li::before {
+        content: ""; position: absolute; left: 1px; top: 0.52em;
+        width: 5px; height: 5px; transform: rotate(45deg); background: var(--acc); opacity: 0.8;
+      }
+      .quirks li:last-child { margin-bottom: 0; }
+      .voice-line { font-size: 0.86rem; color: var(--muted); font-style: italic; margin: 0 0 16px; }
+      .voice-line b { color: var(--acc); font-style: normal; font-weight: 600; font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase; margin-right: 8px; }
+
+      /* ---------- Load more & empty state ---------- */
+      .load-wrap { text-align: center; padding: 4px 24px 12px; }
+      .load-more {
+        font-family: var(--sans); font-size: 0.82rem; font-weight: 500;
+        letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--gold-bright); background: var(--gold-soft);
+        border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 999px;
+        padding: 13px 34px; cursor: pointer;
+        transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      }
+      .load-more:hover {
+        color: #141005; background: linear-gradient(135deg, var(--gold-bright), var(--gold) 55%, var(--gold-deep));
+        border-color: transparent; transform: translateY(-1px);
+      }
+      .load-more[hidden] { display: none; }
+      .empty {
+        text-align: center; padding: 48px 24px 64px;
+        font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: var(--faint);
+      }
+      .empty[hidden] { display: none; }
+
+      /* ---------- Footer ---------- */
+      footer {
+        text-align: center; padding: 54px 24px 64px; margin-top: 30px;
+        border-top: 1px solid var(--line-soft);
+        background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.015));
+      }
+      .foot-brand { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; letter-spacing: 0.14em; color: #f5f2ea; margin: 0 0 10px; }
+      .foot-line { color: var(--muted); font-style: italic; font-family: var(--serif); font-size: 1.02rem; margin: 0 0 18px; }
+      .foot-updated { color: var(--faint); font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; margin: 0; }
+      .foot-diamond { width: 7px; height: 7px; transform: rotate(45deg); background: var(--gold); margin: 0 auto 22px; opacity: 0.85; }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .card { opacity: 1; transform: none; transition: none; }
+        .card.revealed:hover { transform: none; }
+        .status .dot { animation: none; }
+        .filter-btn, .load-more, .search-box input, .search-box svg { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="hero">
+      <p class="brand-line">D'MONAI Studios</p>
+      <h1>The <span class="thin">Teams</span></h1>
+      <div class="hero-rule" aria-hidden="true"></div>
+      <p class="hero-sub">
+        D doesn't build tools. She builds <strong>teams</strong>. Real AI agents with names,
+        personalities, quirks, and jobs to do. Each one was created with a vision, trained for a
+        purpose, and put to work. This is the roster.
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><div class="num" id="stat-total">300</div><div class="lbl">Agents</div></div>
+        <div class="stat"><div class="num" id="stat-divisions">13</div><div class="lbl">Divisions</div></div>
+        <div class="stat"><div class="num">1</div><div class="lbl">Founder</div></div>
+      </div>
+      <p class="updated">Last updated <b id="updated-display"></b></p>
+    </header>
+
+    <div class="search-wrap wrap">
+      <div class="search-box">
+        <input type="search" id="search" placeholder="Search agents by name or role" aria-label="Search agents by name or role" autocomplete="off" />
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+      </div>
+    </div>
+
+    <nav class="filters wrap" aria-label="Filter agents by division" id="filters"></nav>
+    <p class="showing" id="showing" role="status"></p>
+
+    <main class="wrap">
+      <section class="grid" id="grid" aria-label="Agent roster"></section>
+      <p class="empty" id="empty" hidden>No agents match your search. Try a different name or role.</p>
+      <div class="load-wrap">
+        <button type="button" class="load-more" id="load-more" hidden>Load more agents</button>
+      </div>
+    </main>
+
+    <footer>
+      <div class="foot-diamond" aria-hidden="true"></div>
+      <p class="foot-brand">D'MONAI STUDIOS</p>
+      <p class="foot-line">Built by D. Every team has a story.</p>
+      <p class="foot-updated">Roster updated <span id="updated-footer"></span></p>
+    </footer>
+
+    <script>
+      var DATA = {"lastUpdated":"2026-10-20T09:00:00","lastUpdatedDisplay":"October 20, 2026","teams":[],"totalAgents":308};
+    </script>
+    <script src="teams-a.js"></script>
+    <script src="teams-b.js"></script>
+    <script>
+
+      function esc(s) {
+        return String(s == null ? "" : s)
+          .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+      }
+
+      var PAGE_SIZE = 60;
+      var grid = document.getElementById("grid");
+      var showing = document.getElementById("showing");
+      var filtersEl = document.getElementById("filters");
+      var searchEl = document.getElementById("search");
+      var loadMoreBtn = document.getElementById("load-more");
+      var emptyEl = document.getElementById("empty");
+
+      var TOTAL = typeof DATA.totalAgents === "number" ? DATA.totalAgents : DATA.teams.length;
+
+      document.getElementById("updated-display").textContent = DATA.lastUpdatedDisplay;
+      document.getElementById("updated-footer").textContent = DATA.lastUpdatedDisplay;
+      document.getElementById("stat-total").textContent = TOTAL;
+
+      /* Categories in first-appearance (priority) order from the data */
+      var CATEGORIES = [];
+      DATA.teams.forEach(function (t) {
+        if (CATEGORIES.indexOf(t.category) < 0) CATEGORIES.push(t.category);
+      });
+      document.getElementById("stat-divisions").textContent = CATEGORIES.length;
+
+      var LABELS = { "Specialist": "Specialists" };
+      function labelFor(key) { return LABELS[key] || key; }
+      function countFor(key) {
+        if (key === "all") return TOTAL;
+        return DATA.teams.filter(function (t) { return t.category === key; }).length;
+      }
+
+      /* Filter buttons */
+      var FILTERS = [{ key: "all", label: "All Agents" }].concat(
+        CATEGORIES.map(function (c) { return { key: c, label: labelFor(c) }; })
+      );
+      filtersEl.innerHTML = FILTERS.map(function (f, i) {
+        return '<button type="button" class="filter-btn' + (i === 0 ? " active" : "") +
+          '" data-filter="' + esc(f.key) + '" aria-pressed="' + (i === 0 ? "true" : "false") + '">' +
+          esc(f.label) + '<span class="count">' + countFor(f.key) + "</span></button>";
+      }).join("");
+
+      function cardHTML(t) {
+        var traits = (t.traits || []).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
+        var voice = t.voice ? '<p class="voice-line"><b>Voice</b>' + esc(t.voice) + "</p>" : "";
+        var quirksBlock = "";
+        if (t.quirks && t.quirks.length) {
+          var quirks = t.quirks.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
+          quirksBlock = '<p class="section-label">Quirks</p><ul class="quirks">' + quirks + "</ul>";
+        }
+        return (
+          '<article class="card accent-' + esc(t.accent) + '" data-category="' + esc(t.category) + '">' +
+            '<div class="card-head">' +
+              '<div class="avatar" aria-hidden="true"><span>' + esc(t.initials) + "</span></div>" +
+              '<div class="card-titles">' +
+                "<h2>" + esc(t.name) + "</h2>" +
+                '<p class="role">' + esc(t.role) + "</p>" +
+                '<span class="category">' + esc(t.category) + "</span>" +
+              "</div>" +
+            "</div>" +
+            '<p class="tagline">&ldquo;' + esc(t.tagline) + "&rdquo;</p>" +
+            '<p class="personality">' + esc(t.personality) + "</p>" +
+            voice +
+            '<ul class="traits">' + traits + "</ul>" +
+            '<div class="work">' +
+              '<p class="section-label">Current Work</p>' +
+              "<p>" + esc(t.currentWork) + "</p>" +
+              '<span class="status"><span class="dot" aria-hidden="true"></span>' + esc(t.status) + "</span>" +
+              '<div class="vision">' +
+                '<p class="section-label">D&rsquo;s Vision</p>' +
+                "<blockquote>" + esc(t.vision) + "</blockquote>" +
+              "</div>" +
+              quirksBlock +
+            "</div>" +
+          "</article>"
+        );
+      }
+
+      /* ---------- Filtering, search, pagination ---------- */
+      var state = { filter: "all", query: "", shown: 0 };
+      var filtered = DATA.teams.slice();
+
+      function computeFiltered() {
+        var q = state.query.toLowerCase();
+        filtered = DATA.teams.filter(function (t) {
+          if (state.filter !== "all" && t.category !== state.filter) return false;
+          if (!q) return true;
+          return (t.name + " " + t.role + " " + t.category).toLowerCase().indexOf(q) >= 0;
+        });
+      }
+
+      var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var io = null;
+      if (!reduced && "IntersectionObserver" in window) {
+        io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) {
+              en.target.classList.add("revealed");
+              io.unobserve(en.target);
+            }
+          });
+        }, { threshold: 0.06, rootMargin: "600px 0px 600px 0px" });
+      }
+
+      function watchCards(nodes) {
+        nodes.forEach(function (c, i) {
+          if (reduced || !io) { c.classList.add("revealed"); return; }
+          c.style.transitionDelay = Math.min(i % 9, 8) * 45 + "ms";
+          io.observe(c);
+        });
+        if (!reduced && io) {
+          /* Safety net: no card ever stays invisible. */
+          setTimeout(function () {
+            nodes.forEach(function (c) { c.classList.add("revealed"); });
+          }, 1500);
+        }
+      }
+
+      function updateShowing() {
+        if (!filtered.length) {
+          showing.textContent = "No agents found";
+        } else if (state.filter === "all" && !state.query) {
+          showing.textContent = "Showing " + state.shown + " of " + filtered.length + " agents";
+        } else {
+          showing.textContent = "Showing " + state.shown + " of " + filtered.length +
+            " matching agents (of " + TOTAL + " total)";
+        }
+        loadMoreBtn.hidden = state.shown >= filtered.length;
+        emptyEl.hidden = filtered.length > 0;
+      }
+
+      function renderBatch() {
+        var batch = filtered.slice(state.shown, state.shown + PAGE_SIZE);
+        if (!batch.length) { updateShowing(); return; }
+        var before = grid.children.length;
+        grid.insertAdjacentHTML("beforeend", batch.map(cardHTML).join(""));
+        state.shown += batch.length;
+        var fresh = Array.prototype.slice.call(grid.children, before);
+        watchCards(fresh);
+        updateShowing();
+      }
+
+      function resetAndRender() {
+        computeFiltered();
+        grid.innerHTML = "";
+        state.shown = 0;
+        renderBatch();
+      }
+
+      filtersEl.addEventListener("click", function (e) {
+        var btn = e.target.closest(".filter-btn");
+        if (!btn) return;
+        filtersEl.querySelectorAll(".filter-btn").forEach(function (b) {
+          b.classList.toggle("active", b === btn);
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+        });
+        state.filter = btn.getAttribute("data-filter");
+        resetAndRender();
+      });
+
+      var searchTimer = null;
+      searchEl.addEventListener("input", function () {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function () {
+          state.query = searchEl.value.trim();
+          resetAndRender();
+        }, 120);
+      });
+
+      loadMoreBtn.addEventListener("click", function () { renderBatch(); });
+
+      resetAndRender();
+    </script>
+  </body>
+</html>
