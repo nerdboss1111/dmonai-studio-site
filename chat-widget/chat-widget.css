@@ -1,0 +1,165 @@
+/* D'MONAI Studios Chat Widget
+ * Black and white magazine style. Street luxury.
+ * No em dashes in any visible text.
+ */
+#dmonai-chat-launcher {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #0a0a0a;
+  color: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.45);
+  cursor: pointer;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 26px;
+  transition: transform 0.2s ease;
+}
+#dmonai-chat-launcher:hover { transform: scale(1.08); }
+
+#dmonai-chat-window {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 360px;
+  max-width: calc(100vw - 48px);
+  height: 520px;
+  max-height: calc(100vh - 140px);
+  background: #0d0d0d;
+  color: #f5f5f5;
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.6);
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  overflow: hidden;
+}
+#dmonai-chat-window.open { display: flex; }
+
+#dmonai-chat-header {
+  background: #000;
+  border-bottom: 1px solid #2a2a2a;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#dmonai-chat-header .brand {
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: 3px;
+  font-size: 15px;
+  color: #fff;
+}
+#dmonai-chat-header .tagline {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #999;
+  margin-top: 2px;
+}
+#dmonai-chat-close {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+#dmonai-chat-close:hover { color: #fff; }
+
+#dmonai-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dmonai-msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.dmonai-msg.bot {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  align-self: flex-start;
+  color: #f0f0f0;
+}
+.dmonai-msg.user {
+  background: #f5f5f5;
+  color: #0a0a0a;
+  align-self: flex-end;
+}
+.dmonai-msg.typing { color: #777; font-style: italic; }
+
+#dmonai-quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 16px 8px 16px;
+}
+.dmonai-quick {
+  background: none;
+  border: 1px solid #3a3a3a;
+  color: #ccc;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.dmonai-quick:hover { border-color: #fff; color: #fff; }
+
+#dmonai-chat-input-row {
+  display: flex;
+  border-top: 1px solid #2a2a2a;
+  padding: 12px;
+  gap: 8px;
+}
+#dmonai-chat-input {
+  flex: 1;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+#dmonai-chat-input:focus { border-color: #555; }
+#dmonai-chat-send {
+  background: #fff;
+  color: #0a0a0a;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+#dmonai-chat-send:hover { background: #ddd; }
+
+#dmonai-chat-footer {
+  text-align: center;
+  font-size: 10px;
+  color: #555;
+  padding: 8px;
+  letter-spacing: 1px;
+  border-top: 1px solid #1a1a1a;
+}
+
+@media (max-width: 420px) {
+  #dmonai-chat-window { right: 12px; bottom: 84px; }
+  #dmonai-chat-launcher { right: 12px; bottom: 12px; }
+}
