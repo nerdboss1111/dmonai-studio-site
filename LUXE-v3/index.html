@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUXE by D'MONAI Studios | First Response Concierge</title>
+<meta name="description" content="LUXE by D'MONAI Studios. First Response Concierge answers every charter inquiry in under 60 seconds, day and night, and follows up until it books or closes.">
+<style>
+  :root{
+    --navy:#071725; --navy-deep:#050F1B; --ink:#0d2136;
+    --brass:#AD8C5A; --brass2:#d9c08c; --ivory:#F4F0E6; --muted:#93a7bb;
+    --hair:rgba(173,140,90,.28); --line:#1c3249;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--navy-deep); color:var(--ivory); font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .serif, h1, h2, h3{font-family:Georgia, "Times New Roman", serif; font-weight:400;}
+  a{color:var(--brass2); text-decoration:none;}
+  .wrap{max-width:1060px; margin:0 auto; padding:0 6vw;}
+  .label{color:var(--brass); letter-spacing:.42em; font-size:11px; text-transform:uppercase; font-weight:400;}
+  .topbar{position:relative; z-index:5; display:flex; justify-content:space-between; align-items:center; padding:26px 6vw; border-bottom:1px solid var(--line); background:var(--navy-deep);}
+  .topbar .brand{font-family:Georgia, serif; letter-spacing:.3em; font-size:13px; text-transform:uppercase; color:var(--ivory);}
+  .topbar .brand span{color:var(--brass2);}
+  .topbar .div{letter-spacing:.34em; font-size:11px; text-transform:uppercase; color:var(--muted);}
+  section{padding:16vh 0;}
+  .rule{width:56px; height:1px; background:var(--brass); border:0; margin:44px 0;}
+
+  /* Media plates: deep navy dusk fields that hold stills and film when they land */
+  .media{position:relative; overflow:hidden; background:
+      radial-gradient(120% 90% at 78% 62%, rgba(173,140,90,.14), rgba(173,140,90,0) 55%),
+      linear-gradient(180deg, #0a1e33 0%, #071725 52%, #050F1B 100%);
+    border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);}
+  .media::after{content:""; position:absolute; left:0; right:0; top:58%; height:1px;
+    background:linear-gradient(90deg, rgba(173,140,90,0), rgba(173,140,90,.35), rgba(173,140,90,0));}
+  .media .frame{position:relative; aspect-ratio:16/9; max-height:78vh; margin:0 auto; width:100%;}
+  .media img, .media video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; background:#050F1B;}
+  .media .plate{position:absolute; left:6vw; bottom:22px; z-index:3; color:var(--brass); letter-spacing:.34em; font-size:10px; text-transform:uppercase;}
+  .media .veil{position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:linear-gradient(180deg, rgba(5,15,27,.18), rgba(5,15,27,0) 30%, rgba(5,15,27,0) 62%, rgba(5,15,27,.55));}
+  .media.band{margin:0 auto;}
+  .scene-copy{padding-top:9vh;}
+
+  /* Hero: full-bleed film field, headline resting in the dark safe zone */
+  .hero{position:relative; min-height:100svh; display:flex; align-items:flex-end; overflow:hidden; background:var(--navy-deep);}
+  .hero .media{position:absolute; inset:0; border:0;}
+  .hero .media .frame{aspect-ratio:auto; height:100%; max-height:none;}
+  .hero .media::after{top:64%;}
+  .hero .glow{position:absolute; z-index:1; width:60vw; height:60vw; right:-18vw; top:6vh; pointer-events:none;
+    background:radial-gradient(circle, rgba(173,140,90,.16), rgba(173,140,90,0) 62%);
+    animation:drift 26s ease-in-out infinite alternate;}
+  @keyframes drift{from{transform:translate3d(0,0,0);} to{transform:translate3d(-3.5vw, 2.5vh, 0);}}
+  .hero .veil{position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:linear-gradient(90deg, rgba(5,15,27,.88) 0%, rgba(5,15,27,.55) 44%, rgba(5,15,27,.05) 78%),
+               linear-gradient(0deg, rgba(5,15,27,.9) 0%, rgba(5,15,27,0) 42%);}
+  .hero .inner{position:relative; z-index:4; width:100%; padding:20vh 6vw 13vh; max-width:1060px; margin:0 auto;}
+  .hero h1{font-size:clamp(44px, 7.4vw, 88px); line-height:1.06; letter-spacing:.005em; max-width:12em; margin-top:34px;}
+  .hero h1 em{font-style:italic; color:var(--brass2);}
+  .hero .quiet{margin-top:52px; color:var(--muted); font-size:clamp(16px, 1.6vw, 19px); line-height:2.05; font-weight:300;}
+  .hero .quiet strong{color:var(--ivory); font-weight:400;}
+  .actions{margin-top:64px; display:flex; gap:34px; flex-wrap:wrap; align-items:center;}
+  .cta{display:inline-block; padding:14px 4px 12px; font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--brass2);
+    border-bottom:1px solid var(--brass); transition:color .5s ease, border-color .5s ease; min-height:48px;}
+  .cta:hover{color:var(--ivory); border-color:var(--ivory);}
+  .cta.plain{border-color:rgba(173,140,90,.4); color:var(--muted);}
+  .cta.plain:hover{color:var(--brass2); border-color:var(--brass);}
+
+  .problem p{font-family:Georgia, serif; font-size:clamp(24px, 3.4vw, 38px); line-height:1.5; max-width:20em;}
+  .problem p + p{margin-top:1.1em;}
+  .problem .fine{font-family:"Helvetica Neue", Arial, sans-serif; color:var(--muted); font-size:16px; line-height:2; max-width:34em; margin-top:48px; font-weight:300;}
+
+  h2.title{font-size:clamp(34px, 4.6vw, 56px); line-height:1.14; margin-top:26px; max-width:16em;}
+  .lede{color:var(--muted); font-size:clamp(16px, 1.6vw, 18px); line-height:2; max-width:36em; margin-top:30px; font-weight:300;}
+  .lede strong{color:var(--ivory); font-weight:400;}
+
+  .parts{margin-top:10vh; border-top:1px solid var(--hair);}
+  .part{display:grid; grid-template-columns:110px 1fr; gap:34px; padding:44px 0; border-bottom:1px solid var(--hair); align-items:baseline;}
+  .part .no{font-family:Georgia, serif; font-size:30px; color:var(--brass); font-style:italic;}
+  .part h3{font-size:clamp(21px, 2.4vw, 27px); margin-bottom:10px;}
+  .part p{color:var(--muted); font-size:16px; line-height:1.95; max-width:38em; font-weight:300;}
+
+  .price{margin-top:12vh; text-align:center;}
+  .price .row{display:flex; justify-content:center; align-items:flex-start; gap:0; margin-top:8vh; flex-wrap:wrap;}
+  .price .cell{padding:10px 54px;}
+  .price .cell + .cell{border-left:1px solid var(--hair);}
+  .price .n{font-family:Georgia, serif; font-size:clamp(38px, 5vw, 60px); color:var(--ivory); line-height:1;}
+  .price .n small{font-size:.52em; color:var(--brass2);}
+  .price .l{margin-top:16px; font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--muted);}
+  .price .note{color:var(--muted); font-size:15px; margin-top:7vh; font-weight:300; max-width:40em; margin-left:auto; margin-right:auto; line-height:2;}
+
+  .days{margin-top:12vh;}
+  .days .grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:40px; margin-top:7vh;}
+  .day{border-top:1px solid var(--hair); padding-top:22px;}
+  .day .d{font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--brass);}
+  .day h4{font-family:Georgia, serif; font-weight:400; font-size:20px; margin:12px 0 8px;}
+  .day p{color:var(--muted); font-size:14.5px; line-height:1.9; font-weight:300;}
+
+  .trio{display:grid; grid-template-columns:repeat(3, 1fr); gap:26px; margin-top:9vh;}
+  .trio .slot .media .frame{aspect-ratio:4/3; max-height:none;}
+  .trio .slot .media .plate{left:18px; bottom:14px;}
+  .trio h3{font-size:clamp(20px, 2.2vw, 25px); margin-top:26px;}
+  .trio p{color:var(--muted); font-size:15.5px; line-height:1.95; font-weight:300; margin-top:8px;}
+
+  .line-list{margin-top:9vh; border-top:1px solid var(--hair);}
+  .line-item{display:grid; grid-template-columns:1fr 1.4fr; gap:40px; padding:40px 0; border-bottom:1px solid var(--hair); align-items:baseline;}
+  .line-item h3{font-size:clamp(21px, 2.4vw, 26px);}
+  .line-item p{color:var(--muted); font-size:15.5px; line-height:1.95; font-weight:300;}
+
+  .jet{margin-top:14vh; border-top:1px solid var(--hair); padding-top:10vh;}
+  .jet .promise{font-family:Georgia, serif; font-size:clamp(23px, 3.2vw, 36px); line-height:1.55; max-width:24em; margin-top:30px;}
+  .jet .honest{color:var(--muted); font-size:16px; line-height:2; max-width:36em; margin-top:44px; font-weight:300;}
+  .jet .honest strong{color:var(--ivory); font-weight:400;}
+
+  .std{margin-top:9vh;}
+  .std .item{padding:34px 0; border-bottom:1px solid var(--hair);}
+  .std .item:first-child{border-top:1px solid var(--hair);}
+  .std h3{font-size:clamp(21px, 2.6vw, 28px);}
+  .std p{color:var(--muted); margin-top:8px; font-size:16px; line-height:1.95; max-width:38em; font-weight:300;}
+
+  .referral p.state{font-family:Georgia, serif; font-size:clamp(23px, 3.2vw, 36px); line-height:1.55; max-width:22em;}
+  .referral .fine{color:var(--muted); margin-top:44px; font-size:16px; line-height:2; max-width:36em; font-weight:300;}
+
+  .contact .mail{font-family:Georgia, serif; font-size:clamp(26px, 4.4vw, 46px); color:var(--ivory); border-bottom:1px solid var(--brass); padding-bottom:6px; transition:color .5s ease;}
+  .contact .mail:hover{color:var(--brass2);}
+  .contact .fine{color:var(--muted); margin-top:40px; font-size:16px; line-height:2; max-width:34em; font-weight:300;}
+
+  footer{border-top:1px solid var(--line); padding:34px 6vw 40px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:12px; letter-spacing:.18em; text-transform:uppercase;}
+  footer a{color:var(--muted);} footer a:hover{color:var(--brass2);}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity 1.1s ease, transform 1.1s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    .hero .glow{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+  @media (max-width:760px){
+    section{padding:11vh 0;}
+    .scene-copy{padding-top:6vh;}
+    .hero .inner{padding:16vh 6vw 10vh;}
+    .part{grid-template-columns:1fr; gap:8px; padding:36px 0;}
+    .part .no{font-size:24px;}
+    .price .cell{padding:26px 10px; width:100%;}
+    .price .cell + .cell{border-left:0; border-top:1px solid var(--hair);}
+    .days .grid{grid-template-columns:1fr; gap:28px;}
+    .trio{grid-template-columns:1fr; gap:44px;}
+    .line-item{grid-template-columns:1fr; gap:10px; padding:32px 0;}
+    .actions{gap:22px;}
+    .actions .cta{width:100%;}
+    .topbar{padding:20px 6vw;}
+    .media .frame{aspect-ratio:4/3;}
+    .hero .media .frame{aspect-ratio:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">D'MONAI <span>Studios</span></div>
+  <div class="div">LUXE</div>
+</div>
+
+<header class="hero">
+  <div class="media" aria-hidden="false">
+    <div class="frame">
+      <img src="assets/scene-01.jpg" alt="A superyacht at anchor in dark blue water, softly lit against a quiet dusk coastline." onerror="this.style.display='none'">
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/scene-01.jpg" id="heroFilm">
+        <source src="luxe-film.mp4" type="video/mp4">
+      </video>
+      <div class="veil"></div>
+    </div>
+  </div>
+  <div class="glow"></div>
+  <div class="veil"></div>
+  <div class="inner">
+    <div class="label reveal">LUXE by D'MONAI Studios</div>
+    <h1 class="reveal">Every inquiry, answered in <em>under sixty seconds.</em></h1>
+    <p class="quiet reveal">Day and night. In your voice. With your data.<br>
+    Charter guests write to several firms at once. They book with the firm that answers well, first.<br>
+    <strong>First Response Concierge is that answer.</strong></p>
+    <div class="actions reveal">
+      <a class="cta" href="/demos/charter-concierge.html">See it work</a>
+      <a class="cta plain" href="mailto:LUXE@dmonai.studio">Begin by email</a>
+    </div>
+  </div>
+</header>
+
+<section class="problem" style="padding-top:0;">
+  <div class="media band reveal">
+    <div class="frame">
+      <img src="assets/scene-02.jpg" alt="An unoccupied broker's office at dusk, with a closed laptop and a brass lamp beside a harbor window." loading="lazy" onerror="this.style.display='none'">
+      <div class="veil"></div>
+      <div class="plate">Scene 02 · The Unanswered Hour</div>
+    </div>
+  </div>
+  <div class="wrap scene-copy">
+    <div class="label reveal">The problem</div>
+    <hr class="rule reveal">
+    <p class="reveal">At most firms, the reply still comes by hand.</p>
+    <p class="reveal">From a shared inbox. Hours later.</p>
+    <p class="fine reveal">By then the guest has booked elsewhere, and no one can say where the conversation was lost. Follow-up depends on memory, and memory is where charter weeks go to die. One system ends that: every inquiry answered in under 60 seconds, day and night, and followed up until it books or closes.</p>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="media band reveal">
+    <div class="frame">
+      <img src="assets/scene-03.jpg" alt="A dark, empty superyacht corridor with teak panels, precise brass rails and warm recessed lighting." loading="lazy" onerror="this.style.display='none'">
+      <div class="veil"></div>
+      <div class="plate">Scene 03 · Precision Without Noise</div>
+    </div>
+  </div>
+  <div class="wrap scene-copy">
+    <div class="label reveal">The flagship</div>
+    <h2 class="title reveal">First Response Concierge</h2>
+    <p class="lede reveal">One problem. One promise. One product, identical for every firm. <strong>Only the firm's own data changes.</strong></p>
+
+    <div class="parts">
+      <div class="part reveal"><div class="no">01</div><div><h3>The concierge</h3><p>On your website, answering from your fleet data only: rates, inclusions, itineraries, availability. It never invents a price, a date, or a policy. What it cannot answer, it hands to your broker with the full conversation attached.</p></div></div>
+      <div class="part reveal"><div class="no">02</div><div><h3>The intake</h3><p>Dates, party size, destination, and budget, gathered in one short form. Your broker receives a qualified lead, not a vague message.</p></div></div>
+      <div class="part reveal"><div class="no">03</div><div><h3>The follow-up</h3><p>An immediate, personal reply to the guest. Then three considered touches over the following days. Any reply from the guest ends the sequence. Your broker may pause it on any lead, at any time.</p></div></div>
+      <div class="part reveal"><div class="no">04</div><div><h3>The lead view</h3><p>Every inquiry in one panel: reference code, priority score, the complete conversation. Each new lead also arrives by email the moment it is placed.</p></div></div>
+    </div>
+
+    <div class="price reveal">
+      <div class="label">The engagement</div>
+      <div class="row">
+        <div class="cell"><div class="n">$7,500</div><div class="l">Install, one time</div></div>
+        <div class="cell"><div class="n"><small>$</small>3,750 <small>/</small> <small>$</small>3,750</div><div class="l">To begin / when live</div></div>
+        <div class="cell"><div class="n">$1,250</div><div class="l">Care, per month</div></div>
+      </div>
+      <p class="note">The care plan keeps your fleet data current, refines answers from real guest questions, and reports your inquiries monthly. Month to month. Cancel by email.</p>
+    </div>
+
+    <div class="days reveal">
+      <div class="label">Five days</div>
+      <div class="grid">
+        <div class="day"><div class="d">Day 0</div><h4>Begin</h4><p>Deposit received. Your firm sends fleet sheets, rate cards, and house rules.</p></div>
+        <div class="day"><div class="d">Days 1 to 3</div><h4>Build</h4><p>The concierge is built on your data. Intake and follow-up are set.</p></div>
+        <div class="day"><div class="d">Day 4</div><h4>Review</h4><p>You review the concierge against your own fleet and request corrections.</p></div>
+        <div class="day"><div class="d">Day 5</div><h4>Live</h4><p>Live on your website. The balance comes due. The care plan begins.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="media band reveal">
+    <div class="frame">
+      <img src="assets/scene-04.jpg" alt="An empty, elegantly lit harbor-side workstation with a blank dark screen ready for a real concierge demonstration." loading="lazy" onerror="this.style.display='none'">
+      <div class="veil"></div>
+      <div class="plate">Scene 04 · Working Demonstration</div>
+    </div>
+  </div>
+  <div class="wrap scene-copy">
+    <div class="label reveal">The demonstration</div>
+    <h2 class="title reveal">See it work.</h2>
+    <p class="lede reveal">A working concierge, not a slide deck. Ask it a question. Place a sample inquiry. See the lead your broker would receive. The demonstration runs on sample vessel data, labeled as such. <strong>Yours is built on your own fleet.</strong></p>
+    <div class="actions reveal"><a class="cta" href="/demos/charter-concierge.html">Open the demonstration</a></div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="label reveal">Beyond the flagship</div>
+    <h2 class="title reveal">The LUXE line</h2>
+    <p class="lede reveal">One standard, three markets. What follows is the same First Response Concierge, built on each firm's own data. <strong>Applications of one product, not separate products.</strong></p>
+
+    <div class="trio">
+      <div class="slot reveal">
+        <div class="media"><div class="frame">
+          <img src="assets/scene-05a.jpg" alt="A quiet yacht deck at dusk." loading="lazy" onerror="this.style.display='none'">
+          <div class="veil"></div><div class="plate">Scene 05A · Yacht Charter</div>
+        </div></div>
+        <h3>Yacht charter firms</h3>
+        <p>The original engagement, set out above. Charter inquiries answered in under a minute, in the firm's voice, and followed up until the week books or the lead closes.</p>
+      </div>
+      <div class="slot reveal">
+        <div class="media"><div class="frame">
+          <img src="assets/scene-05b.jpg" alt="A private jet wing at dusk." loading="lazy" onerror="this.style.display='none'">
+          <div class="veil"></div><div class="plate">Scene 05B · Private Aviation</div>
+        </div></div>
+        <h3>Private jet charter brokers</h3>
+        <p>The same discipline at charter speed, where one trip request is sent to several brokers at once and the first complete answer usually takes it. Set out in full below.</p>
+      </div>
+      <div class="slot reveal">
+        <div class="media"><div class="frame">
+          <img src="assets/scene-05c.jpg" alt="An empty Miami penthouse overlooking a night skyline." loading="lazy" onerror="this.style.display='none'">
+          <div class="veil"></div><div class="plate">Scene 05C · Miami Property</div>
+        </div></div>
+        <h3>Miami luxury real estate and rentals</h3>
+        <p>Speed to lead for penthouse and luxury listings, and guest communication around the clock for luxury stays. Each inquiry owned until the tour books or the lead closes.</p>
+      </div>
+    </div>
+
+    <div class="jet reveal">
+      <div class="label">Private aviation</div>
+      <h2 class="title">First Response Concierge, Private Aviation</h2>
+      <p class="promise">Every charter inquiry answered in under 60 seconds, day and night. The complete trip taken. Follow-up until the trip books or the lead closes.</p>
+      <div class="parts">
+        <div class="part reveal"><div class="no">01</div><div><h3>The concierge</h3><p>On the firm's website, answering booking and aircraft class questions from the firm's own approved data table only. What it cannot answer goes straight to the broker, with the conversation attached.</p></div></div>
+        <div class="part reveal"><div class="no">02</div><div><h3>The trip intake</h3><p>Route, dates and times, passengers, bags and gear, pets, catering, and flexibility, captured in one short form. Missing fields are chased by the concierge, not by the broker. The broker receives a sourcing ready brief.</p></div></div>
+        <div class="part reveal"><div class="no">03</div><div><h3>The follow-up</h3><p>An immediate confirmation restating the trip. Then considered touches at hour four, day one, and day three. Any client reply ends the sequence. The broker may pause it on any lead, at any time.</p></div></div>
+        <div class="part reveal"><div class="no">04</div><div><h3>The lead view</h3><p>Every request in one panel: reference code, priority score, the complete conversation. Each new lead also arrives by email the moment it is placed.</p></div></div>
+      </div>
+      <p class="honest reveal"><strong>An inquiry layer only.</strong> The concierge never quotes a price and never promises an aircraft. Pricing, aircraft confirmation, and the broker's own disclosures stay inside the firm's quote process, where they belong.</p>
+      <div class="price reveal">
+        <div class="label">The engagement</div>
+        <div class="row">
+          <div class="cell"><div class="n">$9,500</div><div class="l">Install, one time</div></div>
+          <div class="cell"><div class="n"><small>$</small>4,750 <small>/</small> <small>$</small>4,750</div><div class="l">To begin / when live</div></div>
+          <div class="cell"><div class="n">$1,500</div><div class="l">Care, per month</div></div>
+        </div>
+        <p class="note">Five days from deposit to live, on the same discipline as the flagship. The care plan keeps fleet and route data current and reports inquiries monthly. Month to month. Cancel by email.</p>
+      </div>
+      <div class="actions reveal"><a class="cta" href="jet-demo.html">Open the aviation demonstration</a></div>
+    </div>
+
+    <div class="line-list">
+      <div class="line-item reveal"><h3>Luxury real estate, Miami</h3><p>Speed to lead for penthouse and luxury listings. Portal, evening, and weekend inquiries answered to the same standard, and followed up until the tour books or the lead closes.</p></div>
+      <div class="line-item reveal"><h3>Luxury short-term rentals</h3><p>Guest communication, around the clock. Before arrival, during the stay, after checkout, answered in the host's voice. Anything unusual is escalated to the manager at once.</p></div>
+      <div class="line-item reveal"><h3>Yacht operations</h3><p>APA expense reconciliation. Expenses captured as they happen and returned as one clean, owner ready report, in place of paper receipts and spreadsheets deciphered weeks later.</p></div>
+      <div class="line-item reveal"><h3>Condo closings, Florida</h3><p>Lender questionnaires and estoppel coordination under one accountable owner: intake, deadlines, and answer assembly, so no closing document sits unwatched.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="media band reveal">
+    <div class="frame">
+      <img src="assets/scene-06.jpg" alt="An unmarked brass precision instrument on a dark teak surface under restrained warm light." loading="lazy" onerror="this.style.display='none'">
+      <div class="veil"></div>
+      <div class="plate">Scene 06 · A Measured Promise</div>
+    </div>
+  </div>
+  <div class="wrap scene-copy">
+    <div class="label reveal">How this division works</div>
+    <h2 class="title reveal">The LUXE standard</h2>
+    <div class="std">
+      <div class="item reveal"><h3>Answer in under a minute.</h3><p>Speed is the product. Everything else in this division exists to support that standard.</p></div>
+      <div class="item reveal"><h3>Never quote what we cannot verify.</h3><p>A price, a date, or a policy comes from the client's own data, or it does not go out.</p></div>
+      <div class="item reveal"><h3>Every inquiry has an owner.</h3><p>Until it books or closes. No lead lives in a shared inbox. No follow-up depends on memory.</p></div>
+      <div class="item reveal"><h3>Referrals are earned, not bought.</h3><p>The work is identical for every client, so any client can show a peer exactly what they would receive.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="referral" style="padding-top:0;">
+  <div class="media band reveal">
+    <div class="frame">
+      <img src="assets/scene-07.jpg" alt="Two blank ivory invitation cards and a simple brass tray on a dark stone table in evening light." loading="lazy" onerror="this.style.display='none'">
+      <div class="veil"></div>
+      <div class="plate">Scene 07 · The Private Introduction</div>
+    </div>
+  </div>
+  <div class="wrap scene-copy">
+    <div class="label reveal">Referrals</div>
+    <hr class="rule reveal">
+    <p class="state reveal">Built to be forwarded.</p>
+    <p class="fine reveal">Every client receives a personal demonstration link, headed with their firm's name, made to be passed on in one tap and one sentence. When a firm you refer signs and pays its deposit, your next month of care is ours to give: a $1,250 value, offered in service as a thank you, never as a discount.</p>
+  </div>
+</section>
+
+<section class="contact" style="padding-top:0;">
+  <div class="media band reveal">
+    <div class="frame">
+      <img src="assets/scene-08.jpg" alt="A quiet penthouse study with brass pen and blank stationery overlooking distant Miami lights at dusk." loading="lazy" onerror="this.style.display='none'">
+      <div class="veil"></div>
+      <div class="plate">Scene 08 · Begin Quietly</div>
+    </div>
+  </div>
+  <div class="wrap scene-copy">
+    <div class="label reveal">Contact</div>
+    <h2 class="title reveal">Begin by email.</h2>
+    <p class="fine reveal">LUXE works by email only. There are no sales calls. Send your firm's name and your market, and you will receive the demonstration built on your own fleet or listings. We answer our own inquiries the way we will answer yours.</p>
+    <p style="margin-top:56px;"><a class="mail" href="mailto:LUXE@dmonai.studio">LUXE@dmonai.studio</a></p>
+  </div>
+</section>
+
+<footer>
+  <span>LUXE · By D'MONAI</span>
+  <span><a href="https://dmonai.studio/">dmonai.studio</a></span>
+  <span>© 2026 D'MONAI Studios</span>
+</footer>
+
+<script>
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function(e){ e.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(function(e){ io.observe(e); });
+    }
+    var film = document.getElementById('heroFilm');
+    if (film) {
+      var src = film.querySelector('source');
+      if (src) {
+        src.addEventListener('error', function(){ film.remove(); });
+      }
+      film.addEventListener('error', function(){ film.remove(); }, true);
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        film.removeAttribute('autoplay');
+        film.pause();
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>
