@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Usage Lens shows where your AI credits actually go: a breakdown by category, automation, and chat for Muse, ChatGPT, Claude, and Gemini. Free and open source." />
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <title>Usage Lens | D'MONAI Studios</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --paper: #ffffff;
+        --paper-2: #f4f4f2;
+        --ink: #101012;
+        --ink-2: #3d3d42;
+        --ink-3: #6d6d74;
+        --line: #e2e2de;
+        --brass: #9a741f;
+        --brass-bright: #c49a35;
+        --btn-bg: #101012;
+        --btn-fg: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #101013;
+          --paper-2: #17171b;
+          --ink: #f2f1ec;
+          --ink-2: #c6c4bd;
+          --ink-3: #98958d;
+          --line: #2b2b31;
+          --brass: #c49a35;
+          --btn-bg: #f2f1ec;
+          --btn-fg: #101012;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; }
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+      .topbar {
+        position: sticky; top: 0; z-index: 20;
+        background: color-mix(in srgb, var(--paper) 92%, transparent);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      .topbar-in {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 16px; padding: 14px 0;
+      }
+      .wordmark {
+        font-weight: 900; letter-spacing: 0.04em; font-size: 1.05rem;
+        text-decoration: none; white-space: nowrap;
+      }
+      .wordmark span { color: var(--brass); }
+      nav.main { display: flex; align-items: center; gap: 28px; }
+      nav.main a {
+        text-decoration: none; font-size: 0.92rem; font-weight: 600; color: var(--ink-2);
+      }
+      nav.main a:hover { color: var(--ink); }
+      nav.main a.cta {
+        background: var(--btn-bg); color: var(--btn-fg);
+        padding: 9px 18px; border-radius: 999px; font-weight: 700;
+      }
+      nav.main a.cta:hover { opacity: 0.85; color: var(--btn-fg); }
+      @media (max-width: 640px) {
+        nav.main a:not(.cta) { display: none; }
+      }
+
+      main { padding: 72px 0 84px; }
+      .page { max-width: 680px; }
+      .meta {
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--brass); margin: 0 0 20px;
+      }
+      h1 {
+        font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+        line-height: 1.05; font-weight: 900; letter-spacing: -0.01em;
+        margin: 0 0 20px;
+      }
+      p.lede { font-size: 1.15rem; color: var(--ink-2); margin: 0 0 28px; }
+      p { color: var(--ink-2); margin: 0 0 18px; }
+      p strong { color: var(--ink); }
+      .facts {
+        border-top: 1px solid var(--line);
+        margin: 36px 0;
+      }
+      .fact {
+        display: grid; grid-template-columns: 150px 1fr;
+        gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line);
+        align-items: baseline;
+      }
+      .fact .num {
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        font-size: 1.15rem; font-weight: 500; color: var(--brass);
+      }
+      .fact p { margin: 0; }
+      @media (max-width: 560px) {
+        .fact { grid-template-columns: 1fr; gap: 4px; }
+      }
+      form.gate {
+        background: var(--paper-2);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 28px;
+        margin: 36px 0 14px;
+      }
+      form.gate label {
+        display: block; font-weight: 700; margin-bottom: 12px; color: var(--ink);
+      }
+      .row { display: flex; gap: 12px; flex-wrap: wrap; }
+      .row input[type="email"] {
+        flex: 1 1 260px;
+        font: inherit;
+        padding: 13px 18px;
+        border-radius: 999px;
+        border: 1.5px solid var(--line);
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .row button {
+        font: inherit; font-weight: 700;
+        padding: 13px 26px; border-radius: 999px;
+        border: none; cursor: pointer;
+        background: var(--btn-bg); color: var(--btn-fg);
+      }
+      .row button:hover { opacity: 0.85; }
+      .honest { font-size: 0.92rem; color: var(--ink-3); margin: 0 0 28px; }
+      .fineprint { font-size: 0.92rem; color: var(--ink-3); }
+
+      footer { border-top: 1px solid var(--line); padding: 28px 0; }
+      .foot-in {
+        display: flex; flex-wrap: wrap; gap: 12px 24px;
+        align-items: center; font-size: 0.92rem; color: var(--ink-3);
+      }
+      .foot-in a { text-decoration: none; color: var(--ink-2); }
+      .foot-in a:hover { color: var(--ink); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap topbar-in">
+        <a class="wordmark" href="https://dmonai.studio/">D'MONAI <span>Studios</span></a>
+        <nav class="main">
+          <a href="https://dmonai.studio/">Home</a>
+          <a class="cta" href="#get">Get Usage Lens</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="wrap page">
+        <p class="meta">Usage Lens · Free and open source</p>
+        <h1>See where your AI credits actually go.</h1>
+        <p class="lede">Every AI platform shows you a bar going down and never tells you what moved it. Usage Lens breaks your consumption down by category, by automation, and by chat, so you can stop guessing and start saving.</p>
+
+        <div class="facts">
+          <div class="fact">
+            <span class="num">182.4k</span>
+            <p>Tokens of history re-read by <strong>one side chat on every call</strong>. That is 30.1M tokens a week spent just re-reading old context.</p>
+          </div>
+          <div class="fact">
+            <span class="num">67.7%</span>
+            <p>Of total usage eaten by <strong>background automations</strong>. Nobody's platform dashboard showed any of this.</p>
+          </div>
+        </div>
+
+        <p>Usage Lens works with <strong>Muse, ChatGPT, Claude, and Gemini</strong>. It runs entirely in your browser and your data never leaves it. It is free and open source under the MIT license.</p>
+
+        <form class="gate" id="get" action="https://formsubmit.co/dmonaistudios@gmail.com" method="POST">
+          <label for="email">Get the download link by email</label>
+          <input type="hidden" name="_subject" value="Usage Lens download request" />
+          <input type="hidden" name="_next" value="https://dmonai.studio/usage-lens-thanks.html" />
+          <input type="hidden" name="_captcha" value="true" />
+          <div class="row">
+            <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            <button type="submit">Send me the link</button>
+          </div>
+        </form>
+        <p class="honest">Your email goes to D'MONAI Studios. No spam, no list resale.</p>
+
+        <p class="fineprint">Prefer to look first? The project lives on GitHub as nerdboss1111/usage-lens, where the full findings and the estimation math are written up in the open.</p>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap foot-in">
+        <a class="wordmark" href="https://dmonai.studio/">D'MONAI <span>Studios</span></a>
+        <span>AI Consulting · Books · Courses · Digital Products</span>
+        <a href="mailto:info@dmonai.studio">info@dmonai.studio</a>
+        <span>© 2026 D'MONAI Studios. All rights reserved.</span>
+      </div>
+    </footer>
+  </body>
+</html>
