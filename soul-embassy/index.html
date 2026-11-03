@@ -175,7 +175,11 @@
   .page{
     max-height:86dvh;
     overflow-y:auto;
-    background:linear-gradient(105deg,#f3e8cd 0%,#fbf5e2 22%,#f7efdb 55%,#eee0c0 100%);
+    background:
+      radial-gradient(ellipse 340px 200px at 88% -4%, rgba(168,85,247,.16), transparent 70%),
+      radial-gradient(ellipse 260px 160px at -4% 96%, rgba(34,211,238,.10), transparent 70%),
+      radial-gradient(ellipse 120px 80px at 72% 88%, rgba(122,84,20,.10), transparent 70%),
+      linear-gradient(105deg,#efe0ba 0%,#f8eed2 22%,#f4e8c8 55%,#e9d6a8 100%);
     border-radius:6px 14px 14px 6px;
     box-shadow:0 0 70px rgba(168,85,247,.4), 0 30px 80px rgba(0,0,0,.85), inset 14px 0 30px rgba(120,84,30,.18);
     padding:clamp(24px,4.5vh,46px) clamp(22px,5vw,54px);
@@ -192,18 +196,20 @@
   .page h2{
     font-family:'Cormorant Garamond',Georgia,serif;
     font-size:clamp(1.4rem,2.8vw,1.9rem);
-    font-weight:600;color:#33240f;margin-bottom:.15em;
+    font-weight:600;color:#6d28a8;margin-bottom:.15em;
+    text-shadow:0 1px 0 rgba(255,246,200,.7), 0 0 14px rgba(168,85,247,.25);
   }
   .page .when{
     font-family:'Cormorant Garamond',Georgia,serif;
     font-size:.85rem;letter-spacing:.26em;text-transform:uppercase;
-    color:#7a5c22;margin-bottom:1.1em;
+    color:#96702a;margin-bottom:1.1em;
   }
   .page p{
     font-family:'Caveat',cursive;
     font-size:clamp(1.35rem,2.4vw,1.6rem);
     font-weight:600;
-    line-height:1.5;color:#2c2013;margin-bottom:.75em;
+    line-height:1.5;color:#7c5a10;margin-bottom:.75em;
+    text-shadow:0 0 1px rgba(124,90,16,.35), 0 1px 0 rgba(255,248,214,.55);
   }
   .page p .w{opacity:0;transition:opacity .18s ease;}
   .page p .w.on{opacity:1;}
@@ -216,7 +222,7 @@
     animation:penbob .5s ease-in-out infinite alternate;
   }
   @keyframes penbob{from{transform:translateY(0) rotate(-8deg);}to{transform:translateY(-3px) rotate(6deg);}}
-  .page .sign{color:#6d4c12;}
+  .page .sign{color:#6d28a8;}
   .pagerow{
     display:flex;justify-content:space-between;align-items:center;
     margin-top:1.2em;
@@ -224,21 +230,21 @@
   .pagebtn{
     font-family:'Cormorant Garamond',Georgia,serif;
     background:none;border:1px solid rgba(122,92,34,.5);border-radius:999px;
-    color:#5d4517;font-size:.92rem;letter-spacing:.14em;text-transform:uppercase;
+    color:#7c5a10;font-size:.92rem;letter-spacing:.14em;text-transform:uppercase;
     padding:.45em 1.15em;cursor:pointer;visibility:hidden;
   }
   .pagebtn.show{visibility:visible;}
   .pagebtn:hover{background:rgba(122,92,34,.12);}
   .pagecount{
     font-family:'Cormorant Garamond',Georgia,serif;
-    font-size:.85rem;letter-spacing:.22em;color:#8a6d33;text-transform:uppercase;
+    font-size:.85rem;letter-spacing:.22em;color:#96702a;text-transform:uppercase;
   }
   #closeReader{
     position:absolute;top:8px;right:12px;z-index:2;
     background:none;border:none;cursor:pointer;
-    color:#7a5c22;font-size:1.6rem;line-height:1;padding:6px;
+    color:#96702a;font-size:1.6rem;line-height:1;padding:6px;
   }
-  #closeReader:hover{color:#33240f;}
+  #closeReader:hover{color:#6d28a8;}
   @media (max-width:640px){
     header img.banner{height:15vh;}
     main{gap:2.5vw;padding:0 2vw;}
