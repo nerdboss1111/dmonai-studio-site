@@ -415,8 +415,9 @@
     .doors{margin-top:10px;}
   }
   @media (max-width:860px){
-    .scene{height:36vh;}
-    .heroImg{object-position:74% 30%;}
+    .scene{height:auto;}
+    .heroImg{height:auto;object-fit:contain;object-position:center center;transform:none;translate:none !important;}
+    .scene::after{height:28px;}
     .books{flex-wrap:nowrap;gap:10px;}
     .book{flex:1 1 0;min-width:0;}
     .book img{width:100%;height:auto;}
